@@ -140,39 +140,29 @@ void CControlDesk::readButtons(){
     //Serial.print(c, BIN);
     //Serial.print("]");
 
-    /*
+    
     switch(i){
       case 0:
-        buttons[btnCounter++]->setState( (c & (1<<7))>>7 );
-        buttons[btnCounter++]->setState( (c & (1<<6))>>6 );
-        buttons[btnCounter++]->setState( (c & (1<<5))>>5 );
-        buttons[btnCounter++]->setState( (c & (1<<4))>>4 );
-        buttons[btnCounter++]->setState( (c & (1<<3))>>3 );
-        buttons[btnCounter++]->setState( (c & (1<<2))>>2 );
-        buttons[btnCounter++]->setState( ((c & (1<<1))>>1) ^ 1 ); //Bit inversed
-        //rotaryEncoder->setState( (rotaryEncoder->getState() & (~(1 << 1))) | ((c & 1) << 1) );
-      break;
-      
-      case 1:
-        //rotaryEncoder->setState( (rotaryEncoder->getState() & (~(1 << 1))) | ( ((c & (1<<7))>>7) << 1) );
-        //outer_knob->setState( (inner_knob.getState() & (~(1 << 1))) | ( ((c & (1<<7))>>7) << 1) );
-        //outer_knob->setState
-        //outer_knob->setState
-        //outer_knob->setState
-        //outer_knob->setState
-        //outer_knob->setState
-        buttons[btnCounter++]->setState( c & 1 );
-      break;
-
-      case 10:
-        buttons[btnCounter++]->setState( (c & (1<<7))>>7 );
+        //MSB ignored (not used on board?)
         buttons[btnCounter++]->setState( (c & (1<<6))>>6 );
         buttons[btnCounter++]->setState( (c & (1<<5))>>5 );
         buttons[btnCounter++]->setState( (c & (1<<4))>>4 );
         buttons[btnCounter++]->setState( (c & (1<<3))>>3 );
         buttons[btnCounter++]->setState( (c & (1<<2))>>2 );
         buttons[btnCounter++]->setState( (c & (1<<1))>>1 );
-        //ignore last bit
+        buttons[btnCounter++]->setState( (c & 1) ^ 1 ); //Power button bit inversed
+      break;
+      
+      case 1:
+        //rotaryEncoder->setState;
+        //rotaryEncoder->setState;
+        //outer_knob->setState; //rotaryEncoder->setState;
+        //outer_knob->setState //rotaryEncoder->setState;
+        //outer_knob->setState
+        //outer_knob->setState
+        //outer_knob->setState
+        //outer_knob->setState
+        //outer_knob->setState
       break;
       
       default:
@@ -186,7 +176,7 @@ void CControlDesk::readButtons(){
         buttons[btnCounter++]->setState( c & 1 );
       break;
     }//switch
-    */
+    
   }//for
   //Serial.print(" ------->");
   //for(int i=0; i<10; i++){
