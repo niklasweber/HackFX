@@ -144,13 +144,13 @@ void CControlDesk::readButtons(){
     switch(i){
       case 0:
         //MSB ignored (not used on board?)
-        buttons[btnCounter++]->setState( (c & (1<<6))>>6 );
-        buttons[btnCounter++]->setState( (c & (1<<5))>>5 );
-        buttons[btnCounter++]->setState( (c & (1<<4))>>4 );
-        buttons[btnCounter++]->setState( (c & (1<<3))>>3 );
-        buttons[btnCounter++]->setState( (c & (1<<2))>>2 );
-        buttons[btnCounter++]->setState( (c & (1<<1))>>1 );
-        buttons[btnCounter++]->setState( (c & 1) ^ 1 ); //Power button bit inversed
+        buttons[btnCounter++]->setState( ((c & (1<<6))>>6) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<5))>>5) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<4))>>4) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<3))>>3) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<2))>>2) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<1))>>1) ^ 1 );
+        buttons[btnCounter++]->setState( c & 1 ); //Power button bit inversed
       break;
       
       case 1:
@@ -166,14 +166,14 @@ void CControlDesk::readButtons(){
       break;
       
       default:
-        buttons[btnCounter++]->setState( (c & (1<<7))>>7 );
-        buttons[btnCounter++]->setState( (c & (1<<6))>>6 );
-        buttons[btnCounter++]->setState( (c & (1<<5))>>5 );
-        buttons[btnCounter++]->setState( (c & (1<<4))>>4 );
-        buttons[btnCounter++]->setState( (c & (1<<3))>>3 );
-        buttons[btnCounter++]->setState( (c & (1<<2))>>2 );
-        buttons[btnCounter++]->setState( (c & (1<<1))>>1 );
-        buttons[btnCounter++]->setState( c & 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<7))>>7) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<6))>>6) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<5))>>5) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<4))>>4) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<3))>>3) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<2))>>2) ^ 1 );
+        buttons[btnCounter++]->setState( ((c & (1<<1))>>1) ^ 1 );
+        buttons[btnCounter++]->setState( (c & 1) ^ 1 );
       break;
     }//switch
     
