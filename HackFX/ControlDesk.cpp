@@ -129,12 +129,12 @@ void CControlDesk::readButtons(){
   digitalWrite(BUTTON_MUX_LOAD, LOW);
   digitalWrite(BUTTON_MUX_LOAD, HIGH);
 
-  uint8_t testData[] = {0b00000001, 0b10000000, 0,0,0,0,0,0,0,0};
+  //uint8_t testData[] = {0b00000001, 0b10000000, 0,0,0,0,0,0,0,0};
   uint8_t btnCounter = 0;
   //Transfer 10 bytes. 79 Buttons need 10x8 bits, 32 LEDs need 4x8 bits.
   for(int i=0; i<10; i++){
-    //uint8_t c = SPI.transfer(0);
-    uint8_t c = testData[i];
+    uint8_t c = SPI.transfer(0);
+    //uint8_t c = testData[i];
 
     //Serial.print("[");
     //Serial.print(c, BIN);
@@ -178,12 +178,6 @@ void CControlDesk::readButtons(){
     }//switch
     
   }//for
-  //Serial.print(" ------->");
-  //for(int i=0; i<10; i++){
-  //  Serial.print("[");
-  //  Serial.print(buttons[i]->getState(), BIN);
-  //  Serial.print("]");
-  //}
   //Serial.println("");
 }
 
@@ -232,10 +226,10 @@ void CControlDesk::checkButtonValues(){
         //MIDI.sendNoteOff(1, buttons[i]->getId(), 1);
         //TODO: call callback function(s)
       }
-      //Serial.print("Button ");
-      //Serial.print(buttons[i]->getId());
-      //Serial.print(" changed to ");
-      //Serial.println(buttons[i]->getState());
+      Serial.print("Button ");
+      Serial.print(buttons[i]->getId());
+      Serial.print(" changed to ");
+      Serial.println(buttons[i]->getState());
     }
   }
 }
@@ -246,9 +240,9 @@ void CControlDesk::checkButtonValues(){
 
 void CControlDesk::update(){
   //writeLEDs();
-  //readButtons();
-  //checkButtonValues();
+  readButtons();
+  checkButtonValues();
   //checkEncoderValues();
-  readPots();
-  checkPotValues();
+  //readPots();
+  //checkPotValues();
 }
