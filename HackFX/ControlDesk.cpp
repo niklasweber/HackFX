@@ -2,7 +2,7 @@
 #include <SPI.h>
 #include <MIDI.h>
 
-MIDI_CREATE_DEFAULT_INSTANCE();
+MIDI_CREATE_INSTANCE(HardwareSerial, Serial3,  MIDI);
 CControlDesk ControlDesk;
 
 CControlDesk::CControlDesk() {
@@ -204,7 +204,7 @@ void CControlDesk::setDeskLamp(uint8_t br){
 void CControlDesk::checkPotValues(){
   for(int i=0; i<POT_COUNT; i++){
     if(pots[i]->changed()){
-      //MIDI.sendControlChange(pots[i]->getId(),pots[i]->getValue(),1);
+      MIDI.sendControlChange(pots[i]->getId(),pots[i]->getValue(),1);
       //TODO: call callback function(s)
       
       Serial.print("Pot ");
@@ -219,11 +219,11 @@ void CControlDesk::checkButtonValues(){
   for(int i=0; i<BUTTON_COUNT; i++){
     if(buttons[i]->changed()){
       if(buttons[i]->getState()){
-        //MIDI.sendNoteOn(1, buttons[i]->getId(), 1);
+        MIDI.sendNoteOn(1, buttons[i]->getId(), 1);
         //TODO: call callback function(s)
       }
       else {
-        //MIDI.sendNoteOff(1, buttons[i]->getId(), 1);
+        MIDI.sendNoteOff(1, buttons[i]->getId(), 1);
         //TODO: call callback function(s)
       }
       Serial.print("Button ");
@@ -243,6 +243,6 @@ void CControlDesk::update(){
   readButtons();
   checkButtonValues();
   //checkEncoderValues();
-  //readPots();
-  //checkPotValues();
+  readPots();
+  checkPotValues();
 }
