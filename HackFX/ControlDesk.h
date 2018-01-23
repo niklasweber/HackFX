@@ -56,7 +56,7 @@
  * Display
  */
 
- #define D_BACKLIGHT_LED 4
+#define D_BACKLIGHT_LED 4
 
 #define D_D0      //(Licon pin )
 #define D_D1      //(Licon pin )
@@ -74,51 +74,6 @@
 #define D_CS1     //(Licon pin ) Chip Select (active low)
 
 #endif
-
-
-
-
-
-#if defined(__AVR_ATmega328P__) //Just for debugging. Actually not enough pins / Analog inputs
-
-#define COMMON_X_1 A0 //(Licon pin 53) channel X output of chip 1 or 4 (depending on INH_L & INH_U)
-#define COMMON_X_2 A1 //(Licon pin 54) channel X output of chip 2 or 5 (depending on INH_L & INH_U)
-#define COMMON_X_3 A2 //(Licon pin 55) channel X output of chip 3 or 6 (depending on INH_L & INH_U)
-#define COMMON_X_4 A3 //(Licon pin 56) channel X output of chip 7 (depending on INH_L & INH_U)
-
-#define COMMON_Y_1 A4 //(Licon pin 13) channel Y output of chip 1 or 4 (depending on INH_L & INH_U)
-#define COMMON_Y_2 A5 //(Licon pin 12) channel Y output of chip 2 or 5 (depending on INH_L & INH_U)
-#define COMMON_Y_3 A5 //(Licon pin 11) channel Y output of chip 3 or 6 (depending on INH_L & INH_U)
-#define COMMON_Y_4 A5 //(Licon pin 10) channel Y output of chip 7 (depending on INH_L & INH_U)
-
-#define MUX_A 2       //(Licon pin 9) Channel select A
-#define MUX_B 3       //(Licon pin 57) Channel select B
-
-#define INH_U 4      //(Licon pin 58) inhibit pin for upper row (active low)
-#define INH_L 7      //(Licon pin 8) inhibit pin for lower row (active low)
-
-/*
- * LEDs (Multiplexers: F MM74HC595N)
- */
-//#define LED_MUX_SCK 13  //(Licon pin 46) (SCK PIN) Pin Shift Register Clock Input
-//#define LED_MUX_DATA 11 //(Licon pin 49) (MOSI PIN) Pin Serial Data in
-  #define LED_MUX_RCK 10  //(Licon pin 47) (SS Pin) Pin Storage Regiser Clock Input
-  #define LED_MUX_OE 9    //(Licon pin 48) Pin Output Enable
-
-/*
- * Buttons and speed encoders (Multiplexers: F MM74HC165N)
- */
-//#define BUTTON_MUX_DATA 12    //(Licon pin 52) (MISO PIN) Pin Serial Ouput QH
-//#define BUTTON_MUX_CLK 13     //(Licon pin 51) (SCK PIN) Pin Shift Register Clock
-  #define BUTTON_MUX_LOAD 8     //(Licon pin 50) Pin SHIFT/LOAD
-  
-//#define BUTTON_MUX_INPUT_B   //(Licon pin 19) Pin Parallel Input B???
-
-#define DESKLAMP_TRANSISTOR 6  //(Licon pin 3) Pin has to support PWM
-#define POWER_LED_TRANSISTOR 5 //(Licon pin 2) <-------- careful! short circuit when power button pressed???
-
-#endif
-
 
 
 #define POT_COUNT 56
