@@ -4,6 +4,10 @@
 //MIDI_CREATE_DEFAULT_INSTANCE();
 
 void setup() {
+
+  ControlDesk.registerButtonPressedCallBack(onButtonPressed);
+  ControlDesk.registerButtonReleasedCallBack(onButtonReleased);
+  ControlDesk.registerPotChangedCallBack(onPotValChanged);
   
   ControlDesk.setDeskLamp(255);
   
@@ -33,19 +37,27 @@ void loop() {
   //TODO: eventually make PWM for LEDs possible (not enough memory?)
 }
 
-void onButtonPressed(Button button){
-  //MIDI.sendNoteOn(i, i*2, 1); 
+void onButtonPressed(Button *button){
+  Serial.print("Button ");
+  Serial.print(button->getId());
+  Serial.println(" pressed.");
+  //MIDI.sendNoteOn(1, button->getId(), 1);
 }
 
-void onButtonReleased(Button button){
-  //MIDI.sendNoteOff(i, i*2, 1); 
+void onButtonReleased(Button *button){
+  Serial.print("Button ");
+  Serial.print(button->getId());
+  Serial.println(" released.");
+  //MIDI.sendNoteOff(1, button->getId(), 1);
 }
 
-void onEncoderValChanged(Button encoder){
-  
-}
-
-void onPotValChanged(Pot pot){
-  
+void onPotValChanged(Pot *pot){
+  if(pot->getId() == 0){
+    Serial.print("Pot ");
+    Serial.print(pot->getId());
+    Serial.print(" changed to ");
+    Serial.println(pot->getValue()); 
+  }
+  //MIDI.sendControlChange(pot->getId(),pot->getValue(),1);
 }
 

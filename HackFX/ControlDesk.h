@@ -97,19 +97,18 @@ class CControlDesk
   void readPots();
   void checkPotValues();
   void checkButtonValues();
+  void (*ptrButtonPressed)(Button*);
+  void (*ptrButtonReleased)(Button*);
+  void (*ptrPotValChanged)(Pot*);
   
   public:
   CControlDesk();
+  void registerButtonPressedCallBack(void (*ptrBtnPrsd)(Button*));
+  void registerButtonReleasedCallBack(void (*ptrBtnRlsd)(Button*));
+  void registerPotChangedCallBack(void (*ptrPValCh)(Pot*));
   void update();
   void setDeskLamp(uint8_t br);
   void setLed(uint8_t led, uint8_t br);
-  //uint8_t getButton(uint8_t button);
-  //uint16_t getPot(uint8_t pot);
-  
-  //void registerButtonPressedCallBack();
-  //void registerButtonReleasedCallBack();
-  //void registerFaderChangedCallBack();
-  //void registerKnobChangedCallBack();
 };
 
 extern CControlDesk ControlDesk;

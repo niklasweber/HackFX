@@ -48,6 +48,18 @@ CControlDesk::CControlDesk() {
   readPots();
 }
 
+void CControlDesk::registerButtonPressedCallBack(void (*ptrBtnPrsd)(Button*)){
+  ptrButtonPressed = ptrBtnPrsd;
+}
+
+void CControlDesk::registerButtonReleasedCallBack(void (*ptrBtnRlsd)(Button*)){
+  ptrButtonReleased = ptrBtnRlsd;
+}
+
+void CControlDesk::registerPotChangedCallBack(void (*ptrPValCh)(Pot*)){
+  ptrPotValChanged = ptrPValCh;
+}
+
 void CControlDesk::setLed(uint8_t led, uint8_t br){
   if(br)
     leds &= ~(1 << led); //Set bit nr. led to 0
@@ -204,13 +216,7 @@ void CControlDesk::setDeskLamp(uint8_t br){
 void CControlDesk::checkPotValues(){
   for(int i=0; i<POT_COUNT; i++){
     if(pots[i]->changed()){
-      MIDI.sendControlChange(pots[i]->getId(),pots[i]->getValue(),1);
-      //TODO: call callback function(s)
-      
-      Serial.print("Pot ");
-      Serial.print(pots[i]->getId());
-      Serial.print(" changed to ");
-      Serial.println(pots[i]->getValue());
+      (*ptrPotValChanged)(pots[i]);
     }
   }
 }
@@ -218,31 +224,18 @@ void CControlDesk::checkPotValues(){
 void CControlDesk::checkButtonValues(){
   for(int i=0; i<BUTTON_COUNT; i++){
     if(buttons[i]->changed()){
-      if(buttons[i]->getState()){
-        MIDI.sendNoteOn(1, buttons[i]->getId(), 1);
-        //TODO: call callback function(s)
-      }
-      else {
-        MIDI.sendNoteOff(1, buttons[i]->getId(), 1);
-        //TODO: call callback function(s)
-      }
-      Serial.print("Button ");
-      Serial.print(buttons[i]->getId());
-      Serial.print(" changed to ");
-      Serial.println(buttons[i]->getState());
+      if(buttons[i]->getState())
+        (*ptrButtonPressed)(buttons[i]);
+      else
+        (*ptrButtonReleased)(buttons[i]);
     }
   }
 }
 
-//void CControlDesk::checkEncoderValues(){
-  
-//}
-
 void CControlDesk::update(){
-  //writeLEDs();
+  writeLEDs();
   readButtons();
   checkButtonValues();
-  //checkEncoderValues();
   readPots();
   checkPotValues();
 }
