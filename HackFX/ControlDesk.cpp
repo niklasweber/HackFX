@@ -1,8 +1,6 @@
 #include "ControlDesk.h"
 #include <SPI.h>
-#include <MIDI.h>
 
-MIDI_CREATE_INSTANCE(HardwareSerial, Serial3,  MIDI);
 CControlDesk ControlDesk;
 
 CControlDesk::CControlDesk() {
@@ -40,7 +38,6 @@ CControlDesk::CControlDesk() {
   outer_knob = new Button(BUTTON_COUNT+1);
 
   SPI.begin();
-  MIDI.begin(MIDI_CHANNEL_OMNI);
 
   readButtons();
   readButtons();

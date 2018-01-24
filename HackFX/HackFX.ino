@@ -1,7 +1,7 @@
 #include "ControlDesk.h"
-//#include <MIDI.h>
+#include <MIDI.h>
 
-//MIDI_CREATE_DEFAULT_INSTANCE();
+MIDI_CREATE_INSTANCE(HardwareSerial, Serial3,  MIDI);
 
 void setup() {
 
@@ -14,7 +14,7 @@ void setup() {
   Serial.begin(115200);
   Serial.println("Start");
 
-  //MIDI.begin(MIDI_CHANNEL_OMNI);
+  MIDI.begin(MIDI_CHANNEL_OMNI);
 
   //by default all LEDs are HIGH
   for(int i=0; i<32; i++){
@@ -32,7 +32,8 @@ void loop() {
   ControlDesk.setLed(LED_CC4, HIGH);
 
   ControlDesk.update();
-  
+
+  //TODO: debounce Buttons
   //TODO: Handle when power button is pressed
   //TODO: eventually make PWM for LEDs possible (not enough memory?)
 }
@@ -41,14 +42,14 @@ void onButtonPressed(Button *button){
   Serial.print("Button ");
   Serial.print(button->getId());
   Serial.println(" pressed.");
-  //MIDI.sendNoteOn(1, button->getId(), 1);
+  MIDI.sendNoteOn(1, button->getId(), 1);
 }
 
 void onButtonReleased(Button *button){
   Serial.print("Button ");
   Serial.print(button->getId());
   Serial.println(" released.");
-  //MIDI.sendNoteOff(1, button->getId(), 1);
+  MIDI.sendNoteOff(1, button->getId(), 1);
 }
 
 void onPotValChanged(Pot *pot){
@@ -58,6 +59,6 @@ void onPotValChanged(Pot *pot){
     Serial.print(" changed to ");
     Serial.println(pot->getValue()); 
   }
-  //MIDI.sendControlChange(pot->getId(),pot->getValue(),1);
+  MIDI.sendControlChange(pot->getId(),pot->getValue(),1);
 }
 
