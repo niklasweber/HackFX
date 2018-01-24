@@ -33,32 +33,19 @@ void loop() {
 
   ControlDesk.update();
 
-  //TODO: debounce Buttons
   //TODO: Handle when power button is pressed
   //TODO: eventually make PWM for LEDs possible (not enough memory?)
 }
 
 void onButtonPressed(Button *button){
-  Serial.print("Button ");
-  Serial.print(button->getId());
-  Serial.println(" pressed.");
   MIDI.sendNoteOn(1, button->getId(), 1);
 }
 
 void onButtonReleased(Button *button){
-  Serial.print("Button ");
-  Serial.print(button->getId());
-  Serial.println(" released.");
   MIDI.sendNoteOff(1, button->getId(), 1);
 }
 
 void onPotValChanged(Pot *pot){
-  if(pot->getId() == 0){
-    Serial.print("Pot ");
-    Serial.print(pot->getId());
-    Serial.print(" changed to ");
-    Serial.println(pot->getValue()); 
-  }
   MIDI.sendControlChange(pot->getId(),pot->getValue(),1);
 }
 
