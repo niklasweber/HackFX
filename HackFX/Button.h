@@ -3,12 +3,16 @@
 
 #include <Arduino.h>
 
+const unsigned long debounceDelay = 50;
+
 class Button
 { 
   private:
   uint8_t id;
   uint8_t state;
+  uint8_t last_debounce_state;
   uint8_t last_state;
+  unsigned long lastDebounceTime = 0;
   
   public:
   Button(uint8_t ID) :id(ID) {}

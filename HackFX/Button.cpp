@@ -5,8 +5,15 @@ uint8_t Button::getId(){
 }
 
 void Button::setState(uint8_t st){
-  last_state = state;
-  state = st;
+  if(st != last_debounce_state){
+    lastDebounceTime = millis();
+  }
+
+  if((millis() - lastDebounceTime) > debounceDelay){
+      last_state = state;
+      state = st;
+  }
+  last_debounce_state = st;
 }
 
 uint8_t Button::getState(){
