@@ -6,11 +6,10 @@ uint8_t Pot::getId(){
 
 void Pot::setValue(int val) {
   last_value = value;
-  value = val;
+  value = simpleKalmanFilter.updateEstimate(val) / 1024.0 * 128.0;
 }
 
 int Pot::getValue() {
-  //map(analogRead(COMMON_X_1), 0, 1023, 0, 127)
   return value;
 }
 
