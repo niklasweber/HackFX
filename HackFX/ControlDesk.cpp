@@ -120,7 +120,9 @@ void CControlDesk::readPots() {
       pots[potCounter++]->setValue(analogRead(COMMON_X_3));
       pots[potCounter++]->setValue(analogRead(COMMON_Y_3));
       if(row == 1){
-        pots[potCounter++]->setValue(analogRead(COMMON_X_4));
+        if(ch != 3){
+          pots[potCounter++]->setValue(analogRead(COMMON_X_4));
+        }
         pots[potCounter++]->setValue(analogRead(COMMON_Y_4));
       }
       

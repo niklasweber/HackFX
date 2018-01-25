@@ -76,7 +76,7 @@
 #endif
 
 
-#define POT_COUNT 56
+#define POT_COUNT 55
 #define BUTTON_COUNT 71
 
 class CControlDesk
