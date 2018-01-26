@@ -38,14 +38,14 @@ void loop() {
 }
 
 void onButtonPressed(Button *button){
-  MIDI.sendNoteOn(1, button->getId(), 1);
+  MIDI.sendNoteOn(button->getId(), 1, 5);
 }
 
 void onButtonReleased(Button *button){
-  MIDI.sendNoteOff(1, button->getId(), 1);
+  MIDI.sendNoteOff(button->getId(), 1, 5);
 }
 
 void onPotValChanged(Pot *pot){
-  MIDI.sendControlChange(pot->getId(),pot->getValue(),1);
+  MIDI.sendControlChange(pot->getId(),pot->getValue(),5);
 }
 
