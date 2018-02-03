@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-const unsigned long debounceDelay = 50;
+const unsigned long debounceDelay = 10;
 
 class Button
 { 
