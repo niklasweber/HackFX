@@ -58,10 +58,15 @@ void CControlDesk::registerPotChangedCallBack(void (*ptrPValCh)(Pot*)){
 }
 
 void CControlDesk::setLed(uint8_t led, uint8_t br){
-  if(br)
-    leds &= ~(1 << led); //Set bit nr. led to 0
-  else
-    leds |= (1 << led);  //Set bit nr. led to 1
+  if(led >= 0 && led <= 31){
+    leds[led] = br;
+  }
+}
+
+uint8_t CControlDesk::getLed(uint8_t led){
+  if(led >= 0 && led <= 31){
+    return leds[led];
+  }
 }
 
 void CControlDesk::switchPotRow(uint8_t row){
@@ -198,11 +203,17 @@ void CControlDesk::writeLEDs(){
   //LED_MUX_DATA = MOSI
   
   //LED bits could be transfered simultaneously, but for convenience here it is transmitted separately
-  SPI.transfer(leds >> 24);
-  SPI.transfer(leds >> 16);
-  SPI.transfer(leds >> 8);
-  SPI.transfer(leds);
 
+  for(int i=3; i>=0; i--){
+    uint8_t ch = 0;
+    for(int j=7; j>=0; j--){
+      if(leds[(i*8)+j])
+        ch &= ~(1 << j); //Set bit to 0
+      else
+        ch |= (1 << j);  //Set bit to 1
+    }
+    SPI.transfer(ch);
+  }
   //To make changes visible on MM74HC595, Storage Regiser clock needs to be clocked.
   digitalWrite(LED_MUX_RCK, HIGH);
   digitalWrite(LED_MUX_RCK, LOW);

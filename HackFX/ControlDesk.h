@@ -84,7 +84,7 @@ class CControlDesk
   //Read analog val X times and get average
   const int analogNoiseReduction = 10;
   
-  uint32_t leds; //32 bits for 32 LEDs.
+  uint8_t leds[32]; //32 bits for 32 LEDs.
   Button *rotaryEncoder; //Speed controller
   Button *outer_knob; //Speed controller
   Button *buttons[BUTTON_COUNT];
@@ -109,6 +109,7 @@ class CControlDesk
   void update();
   void setDeskLamp(uint8_t br);
   void setLed(uint8_t led, uint8_t br);
+  uint8_t getLed(uint8_t led);
 };
 
 extern CControlDesk ControlDesk;
