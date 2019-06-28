@@ -13,15 +13,9 @@ Install https://github.com/ddiakopoulos/hiduino binary on ATmega16u2
 
 ## Licon FX mainboard
 The Licon FX mainboard can be logically separated into to the following entities:
-* Fader multiplexer
+* [Fader multiplexer](https://github.com/niklasweber/HackFX/wiki/Fader-multiplexer)
 * Button and encoder multiplexer
 * LED multiplexer
 * Display
 * Stand lamp
 * Power
-
-### Fader multiplexer
-The Licon FX holds 55 faders/potentiometers which need to be read with an ADC.  
-Instead of using 55 pins, the faders/potentiometers are multiplexed so that only 12 pins are necessary.  
-On our board the ST HCF4052B was used (five of them).  
-![asdf](https://raw.githubusercontent.com/niklasweber/HackFX/develop/documentation/fader_schematic.svg)
