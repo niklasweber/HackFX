@@ -2,7 +2,7 @@
 #include "ControlDesk.h"
 #include "MIDI.h"
 
-MIDI_CREATE_INSTANCE(HardwareSerial, Serial3,  MIDI);
+MIDI_CREATE_INSTANCE(HardwareSerial, Serial,  MIDI);
 
 void onButtonPressed(Button *button){
   switch (button->getId()){
@@ -42,8 +42,8 @@ void setup() {
   
   ControlDesk.setDeskLamp(255);
   
-  Serial.begin(115200);
-  Serial.println("Start");
+  // Serial.begin(115200);
+  // Serial.println("Start");
 
   MIDI.begin(MIDI_CHANNEL_OMNI);
 
