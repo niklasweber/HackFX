@@ -4,14 +4,6 @@
 CControlDesk ControlDesk;
 
 CControlDesk::CControlDesk() {
-  pinMode(INH_U, OUTPUT);
-  pinMode(INH_L, OUTPUT);
-  
-  pinMode(MUX_A, OUTPUT);
-  pinMode(MUX_B, OUTPUT);
-
-  pinMode(LED_MUX_RCK, OUTPUT);
-  pinMode(LED_MUX_OE, OUTPUT);
 
   pinMode(BUTTON_MUX_LOAD, OUTPUT);
   //pinMode(BUTTON_MUX_INPUT_B, OUTPUT);
@@ -25,11 +17,6 @@ CControlDesk::CControlDesk() {
   digitalWrite(LED_MUX_OE, LOW);
   digitalWrite(LED_MUX_RCK, LOW);
 
-
-  for(int i=0; i<POT_COUNT; i++){
-    pots[i] = new Pot(i); //Word game haha
-  }
-
   for(int i=0; i<BUTTON_COUNT; i++){
     buttons[i] = new Button(i);
   }
@@ -41,8 +28,6 @@ CControlDesk::CControlDesk() {
 
   readButtons();
   readButtons();
-  readPots();
-  readPots();
 }
 
 void CControlDesk::registerButtonPressedCallBack(void (*ptrBtnPrsd)(Button*)){
@@ -51,10 +36,6 @@ void CControlDesk::registerButtonPressedCallBack(void (*ptrBtnPrsd)(Button*)){
 
 void CControlDesk::registerButtonReleasedCallBack(void (*ptrBtnRlsd)(Button*)){
   ptrButtonReleased = ptrBtnRlsd;
-}
-
-void CControlDesk::registerPotChangedCallBack(void (*ptrPValCh)(Pot*)){
-  ptrPotValChanged = ptrPValCh;
 }
 
 void CControlDesk::setLed(uint8_t led, uint8_t br){
@@ -67,73 +48,6 @@ uint8_t CControlDesk::getLed(uint8_t led){
   if(led >= 0 && led <= 31){
     return leds[led];
   }
-}
-
-void CControlDesk::switchPotRow(uint8_t row){
-  if (row == 0){
-    //activate upper chip row (INH is active low)
-    digitalWrite(INH_U, LOW);
-    digitalWrite(INH_L, HIGH);
-  } else if(row == 1) {
-    //activate lower chip row (INH is active low), deactivate upper chip row
-    digitalWrite(INH_U, HIGH);
-    digitalWrite(INH_L, LOW);
-  }
-}
-
-void CControlDesk::switchMuxChannel(byte ch){
-  switch (ch) {
-    case 0:
-      //set multiplexer channel 0x,0y
-      digitalWrite(MUX_A, LOW);
-      digitalWrite(MUX_B, LOW);
-      break;
-    case 1:
-      //set multiplexer channel 1x,1y
-      digitalWrite(MUX_A, HIGH);
-      digitalWrite(MUX_B, LOW);
-      break;
-    case 2:
-      //set multiplexer channel 2x,2y
-      digitalWrite(MUX_A, LOW);
-      digitalWrite(MUX_B, HIGH);
-      break;
-    case 3:
-      //set multiplexer channel 3x,3y
-      digitalWrite(MUX_A, HIGH);
-      digitalWrite(MUX_B, HIGH);
-      break;
-  }
-}
-
-//Read pots via ST HCF4052BE multiplexers
-void CControlDesk::readPots() {
-  
-  int potCounter = 0;
-  for(int row=0; row<2; row++){
-    
-    switchPotRow(row);
-    
-    for(int ch=0; ch<4; ch++){
-      
-      switchMuxChannel(ch);
-      
-      pots[potCounter++]->setValue(analogRead(COMMON_X_1));
-      pots[potCounter++]->setValue(analogRead(COMMON_Y_1));
-      pots[potCounter++]->setValue(analogRead(COMMON_X_2));
-      pots[potCounter++]->setValue(analogRead(COMMON_Y_2));
-      pots[potCounter++]->setValue(analogRead(COMMON_X_3));
-      pots[potCounter++]->setValue(analogRead(COMMON_Y_3));
-      if(row == 1){
-        if(ch != 3){
-          pots[potCounter++]->setValue(analogRead(COMMON_X_4));
-        }
-        pots[potCounter++]->setValue(analogRead(COMMON_Y_4));
-      }
-      
-    }//channel
-  }//row
-  
 }
 
 void CControlDesk::readButtons(){
@@ -223,14 +137,6 @@ void CControlDesk::setDeskLamp(uint8_t br){
   analogWrite(DESKLAMP_TRANSISTOR, br);
 }
 
-void CControlDesk::checkPotValues(){
-  for(int i=0; i<POT_COUNT; i++){
-    if(pots[i]->changed()){
-      (*ptrPotValChanged)(pots[i]);
-    }
-  }
-}
-
 void CControlDesk::checkButtonValues(){
   for(int i=0; i<BUTTON_COUNT; i++){
     if(buttons[i]->changed()){
@@ -246,6 +152,4 @@ void CControlDesk::update(){
   writeLEDs();
   readButtons();
   checkButtonValues();
-  readPots();
-  checkPotValues();
 }
