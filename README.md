@@ -26,3 +26,7 @@ The Licon FX mainboard can be logically separated into to the following entities
 ## Fader multiplexer
 
 ![Fader schematic](https://github.com/niklasweber/HackFX/blob/master/documentation/fader_schematic.svg?raw=true)
+
+## Button and encoder multiplexer
+
+![Button and encoder multiplexer](https://github.com/niklasweber/HackFX/blob/master/documentation/button_schematic.svg?raw=true)
