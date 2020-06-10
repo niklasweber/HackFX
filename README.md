@@ -13,9 +13,16 @@ Install https://github.com/ddiakopoulos/hiduino binary on ATmega16u2
 
 ## Licon FX mainboard
 The Licon FX mainboard can be logically separated into to the following entities:
-* [Fader multiplexer](https://github.com/niklasweber/HackFX/wiki/Fader-multiplexer)
+* Fader multiplexer
 * Button and encoder multiplexer
 * LED multiplexer
 * Display
 * Stand lamp
 * Power
+
+## Pinout
+![HackFX pinout](https://github.com/niklasweber/HackFX/blob/master/documentation/hackfx_pinout.png?raw=true)
+
+## Fader multiplexer
+
+![Fader schematic](https://github.com/niklasweber/HackFX/blob/master/documentation/fader_schematic.svg?raw=true)
